@@ -7,7 +7,11 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+#if WINDOWS10_0_19041_0_OR_GREATER
+using Microsoft.UI.Xaml.Media.Imaging;
+#else
 using Windows.UI.Xaml.Media.Imaging;
+#endif
 using FFImageLoading.Decoders;
 using System.Collections.Generic;
 

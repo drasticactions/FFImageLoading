@@ -2,9 +2,15 @@
 using System.Threading.Tasks;
 using FFImageLoading.Work;
 using System.IO;
+#if WINDOWS10_0_19041_0_OR_GREATER
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
+#else
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+#endif
 using FFImageLoading.Targets;
 using FFImageLoading.Extensions;
 using ImageSource = FFImageLoading.Work.ImageSource;

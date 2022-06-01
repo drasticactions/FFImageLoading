@@ -7,9 +7,17 @@ using System.Threading.Tasks;
 using FFImageLoading.Args;
 using FFImageLoading.Cache;
 using FFImageLoading.Work;
-using Windows.UI.Xaml.Controls;
-using System.ComponentModel;
+#if WINDOWS10_0_19041_0_OR_GREATER
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Imaging;
+using Microsoft.UI.Xaml;
+using WinStretch = Microsoft.UI.Xaml.Media.Stretch;
+#else
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml;
+using WinStretch = Windows.UI.Xaml.Media.Stretch;
+#endif
+using System.ComponentModel;
 using System.IO;
 using System.Threading;
 
@@ -151,11 +159,11 @@ namespace FFImageLoading.Views
         public Func<CancellationToken, Task<Stream>> ImageStream { get { return (Func<CancellationToken, Task<Stream>>)GetValue(ImageStreamProperty); } set { SetValue(ImageStreamProperty, value); } }
         public static readonly DependencyProperty ImageStreamProperty = DependencyProperty.Register(nameof(ImageStream), typeof(Func<CancellationToken, Task<Stream>>), typeof(MvxCachedImageView), new PropertyMetadata(default(Func<CancellationToken, Task<Stream>>), OnImageChanged));
 
-        public static readonly DependencyProperty StretchProperty = DependencyProperty.Register(nameof(Stretch), typeof(Windows.UI.Xaml.Media.Stretch), typeof(MvxCachedImageView), new PropertyMetadata(default(Windows.UI.Xaml.Media.Stretch), StretchPropertyChanged));
-        public Windows.UI.Xaml.Media.Stretch Stretch { get { return (Windows.UI.Xaml.Media.Stretch)GetValue(StretchProperty); } set { SetValue(StretchProperty, value); } }
+        public static readonly DependencyProperty StretchProperty = DependencyProperty.Register(nameof(Stretch), typeof(WinStretch), typeof(MvxCachedImageView), new PropertyMetadata(default(WinStretch), StretchPropertyChanged));
+        public WinStretch Stretch { get { return (WinStretch)GetValue(StretchProperty); } set { SetValue(StretchProperty, value); } }
         private static void StretchPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((MvxCachedImageView)d)._internalImage.Stretch = (Windows.UI.Xaml.Media.Stretch)e.NewValue;
+            ((MvxCachedImageView)d)._internalImage.Stretch = (WinStretch)e.NewValue;
         }
 
         public static readonly DependencyProperty HorizontalImageAlignmentProperty = DependencyProperty.Register(nameof(HorizontalImageAlignment), typeof(HorizontalAlignment), typeof(MvxCachedImageView), new PropertyMetadata(HorizontalAlignment.Stretch, HorizontalImageAlignmentPropertyChanged));
@@ -175,10 +183,10 @@ namespace FFImageLoading.Views
         public string CustomCacheKey { get; set; }
 
         public event EventHandler<SuccessEventArgs> OnSuccess;
-        public event EventHandler<ErrorEventArgs> OnError;
+        public event EventHandler<FFImageLoading.Args.ErrorEventArgs> OnError;
         public event EventHandler<FinishEventArgs> OnFinish;
         public event EventHandler<DownloadStartedEventArgs> OnDownloadStarted;
-        public event EventHandler<DownloadProgressEventArgs> OnDownloadProgress;
+        public event EventHandler<FFImageLoading.Args.DownloadProgressEventArgs> OnDownloadProgress;
         public event EventHandler<FileWriteFinishedEventArgs> OnFileWriteFinished;
 
         public void Cancel()

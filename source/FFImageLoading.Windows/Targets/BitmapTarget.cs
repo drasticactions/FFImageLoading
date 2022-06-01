@@ -1,6 +1,10 @@
 ﻿using System;
 using FFImageLoading.Work;
+#if WINDOWS10_0_19041_0_OR_GREATER
+using Microsoft.UI.Xaml.Media.Imaging;
+#else
 using Windows.UI.Xaml.Media.Imaging;
+#endif
 
 namespace FFImageLoading.Targets
 {

@@ -4,7 +4,13 @@ using FFImageLoading.Config;
 using FFImageLoading.Cache;
 using FFImageLoading.Helpers;
 using FFImageLoading.Work;
+#if WINDOWS10_0_19041_0_OR_GREATER
+using Microsoft.UI.Xaml.Media.Imaging;
+using WinImage = Microsoft.UI.Xaml.Controls.Image;
+#else
 using Windows.UI.Xaml.Media.Imaging;
+using WinImage = Windows.UI.Xaml.Controls.Image;
+#endif
 using Windows.Storage;
 using FFImageLoading.DataResolvers;
 using System.Linq;
@@ -94,7 +100,7 @@ namespace FFImageLoading
         {
             var targetView = currentTask?.Target?.TargetControl;
 
-            if (!(targetView is Windows.UI.Xaml.Controls.Image))
+            if (!(targetView is WinImage))
                 return;
 
             lock (_viewsReferences)
