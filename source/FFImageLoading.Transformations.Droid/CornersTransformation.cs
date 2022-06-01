@@ -95,7 +95,7 @@ namespace FFImageLoading.Transformations
             using (Paint paint = new Paint())
             using (BitmapShader shader = new BitmapShader(source, Shader.TileMode.Clamp, Shader.TileMode.Clamp))
             using (Matrix matrix = new Matrix())
-            using (var path = new Path())
+            using (var path = new Android.Graphics.Path())
             {
                 if (cropX != 0 || cropY != 0)
                 {
